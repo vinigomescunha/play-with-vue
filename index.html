@@ -1,0 +1,214 @@
+<html>
+
+<head>
+  <title></title>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.0"></script>
+  <script src="https://unpkg.com/vue-router@2.0.0"></script>
+</head>
+
+<body>
+  <div id="app">
+    <header>
+      <app-header />
+    </header>
+    <main>
+      <router-view></router-view>
+    </main>
+    <footer>
+      <app-footer />
+    </footer>
+  </div>
+</body>
+<script src="./header.vue.js"></script>
+<script src="./footer.vue.js"></script>
+<script src="./crazy-table.vue.js"></script>
+<script src="./rocket.vue.js"></script>
+<script src="./welcome.vue.js"></script>
+
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+<script>
+
+const POSITIONS = {
+  TOP: 'top',
+  LEFT: 'left',
+  BOTTOM: 'bottom',
+  RIGHT: 'right'
+}
+const KEYS = {
+  UP: 38,
+  DOWN: 40,
+  LEFT: 37,
+  RIGHT: 39,
+  ENTER: 13
+};
+  const PageNotFound = {
+    template: `
+      <div>
+        <h1>404 - Not Found</h1>
+        <div>Page Not Found</div>
+      </div>
+    `
+  }
+  const routes = [{
+      path: '/',
+      name: 'Home',
+      component: Welcome
+    },
+    {
+      path: '/rocket',
+      name: 'Rocket',
+      component: Rocket
+    },
+    {
+      path: '/crazy-table',
+      name: 'Crazy Table',
+      component: CrazyTable
+    },
+    { path: "*", component: PageNotFound }
+  ];
+
+  const router = new VueRouter({
+    routes: routes,
+    mode: 'history',
+    base: '/'
+  });
+
+  const app = new Vue({
+    el: '#app',
+    router: router,
+    components: {
+      "app-header": Header,
+      "app-footer": Footer
+    },
+    data() {
+      return {
+        git: 'https://github.com/vinigomescunha',
+        width: 1000
+      }
+    }
+  })
+</script>
+<style>
+  .header-links {
+    display: flex;
+    justify-content: center;
+    margin: 12px auto;
+  }
+  .header-link {
+    list-style: none;
+    padding: .5rem 1rem;
+  }
+
+  .title {
+    background: #000000;
+    color: #ffffff;
+    margin: 0;
+    padding: 2rem 1rem;
+    border-bottom: 1px solid #333333;
+  }
+
+  .grid {
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  .grid .row {
+    display: flex;
+  }
+
+  .grid .row .cell {
+    display: inline-flex;
+    width: 100%;
+  }
+
+  .grid .row .cell .img {
+    height: 100%;
+    width: 100%;
+  }
+
+  .grid .row .cell.selected {
+    background-color: #ff0000;
+    border-color: #ff0000 !important;
+    color: #ffffff;
+  }
+
+  .grid .row .cell.not-selected {
+    background-color: #000000;
+    color: #ffffff;
+  }
+  .arena {
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  .arena .row {
+    display: flex;
+  }
+
+  .arena .row .cell {
+    background-color: #000000;
+    display: inline-flex;
+    width: 100%;
+  }
+
+  .arena .row .cell * {
+    user-select: none;
+  }
+
+  .arena .row .cell .rocket,
+  .arena .row .cell .blocking,
+  .arena .row .cell .explode {
+    height: 100%;
+    margin: 0 auto;
+    width: auto;
+  }
+
+  .arena .row .cell .rocket.bottom {
+    transform: rotate(-180deg);
+  }
+
+  .arena .row .cell .rocket.top {
+    transform: none;
+  }
+
+  .arena .row .cell .rocket.left {
+    transform: rotate(-90deg);
+  }
+
+  .arena .row .cell .rocket.right {
+    transform: rotate(-270deg);
+  }
+
+  .arena .restart {
+    background-image: linear-gradient(
+      to right,
+      #333333 0%,
+      #000000 10%,
+      #ff0000 30%, 
+      #00ff00 50%,
+      #0000ff 70%,
+      #000000 90%,
+      #333333 100%
+    );
+    border-radius: 10px;
+    border: 10px solid #000;
+    color: #fff;
+    cursor: pointer;
+    font-size: 1.2rem;
+    margin: 10px 5px;
+    outline: none;
+    padding: .4rem 1.3rem;
+    text-shadow: 2px 2px #000000;
+  }
+  main {
+    min-height: 80%;
+  }
+  footer {
+    background-color: rgb(221, 255, 238);
+    margin: 12px auto;
+    text-align: center;
+  }
+</style>
+
+</html>
